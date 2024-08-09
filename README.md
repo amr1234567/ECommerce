@@ -89,6 +89,6 @@ Stripe is integrated into the system for secure payment processing. Customers ca
 
 ### Prerequisites
 
-- [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 - [MongoDB](https://www.mongodb.com/try/download/community) (or use a cloud provider like [MongoDB Atlas](https://www.mongodb.com/cloud/atlas))
 - [Stripe Account](https://stripe.com)
