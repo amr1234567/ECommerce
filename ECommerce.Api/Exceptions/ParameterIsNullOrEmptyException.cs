@@ -9,5 +9,10 @@ namespace ECommerce.Core.Exceptions
     public class ParameterIsNullOrEmptyException : Exception
     {
         public ParameterIsNullOrEmptyException(string message) : base($"{message.Trim()} can't be null or empty") { }
+        public ParameterIsNullOrEmptyException()
+        {
+
+        }
+
     }
 }

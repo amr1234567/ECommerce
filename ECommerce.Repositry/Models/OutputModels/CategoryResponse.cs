@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ECommerce.Core.Entities.Application;
 
-namespace ECommerce.Repositry.Models.OutputModels
+namespace ECommerce.Repository.Models.OutputModels
 {
     public class CategoryResponse
     {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+
     }
 }

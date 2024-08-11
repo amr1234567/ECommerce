@@ -1,9 +1,9 @@
-﻿using ECommerce.Repositry.Models.OutputModels.Base;
+﻿using ECommerce.Repository.Models.OutputModels.Base;
 using Newtonsoft.Json;
 using System.Net;
 
 
-namespace ECommerce.Presentation.Helpers.MiddleWare
+namespace ECommerce.Presentation.Helpers.MiddleWares
 {
     public class ExceptionMiddleWare(RequestDelegate next)
     {

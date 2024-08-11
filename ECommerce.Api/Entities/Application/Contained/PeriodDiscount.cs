@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -12,10 +13,11 @@ namespace ECommerce.Core.Entities.Application.Contained
     public class PeriodDiscount
     {
         [AllowNull]
-        public double DiscountAmount { get; set; } = 0;
+        [Range(0, 100)]
+        public Nullable<double> DiscountPercentage { get; set; } = 0;
         [AllowNull]
-        public DateTime FinalDate { get; set; }
+        public Nullable<DateTime> FinalDate { get; set; }
         [AllowNull]
-        public DateTime FirstDate { get; set; }
+        public Nullable<DateTime> FirstDate { get; set; }
     }
 }

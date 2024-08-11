@@ -1,7 +1,6 @@
 ﻿// Ignore Spelling: Repositry
 
-
-namespace ECommerce.Repositry.Abstraction.UnitOfWork
+namespace ECommerce.Repository.Abstraction.UnitOfWork
 {
     public interface IUnitOfWork
     {

@@ -1,8 +1,9 @@
 ﻿using ECommerce.Core.Repositories.Manager;
 using ECommerce.DataAccess.Repositories.Manager;
-using ECommerce.Repositry.Abstraction.UnitOfWork;
-using ECommerce.Repositry.Abstraction;
-using ECommerce.Repositry.Services;
+using ECommerce.Repository.Abstraction.UnitOfWork;
+using ECommerce.Repository.Services.UnitOfWork;
+using ECommerce.Repository.Abstraction;
+using ECommerce.Repository.Services;
 
 namespace ECommerce.Presentation.Helpers.Extensions
 {

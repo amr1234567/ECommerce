@@ -1,12 +1,12 @@
 ﻿using ECommerce.Core.Entities.Application;
+using ECommerce.Core.Entities.Application.Contained;
 using ECommerce.Core.Entities.Users;
-using ECommerce.Core.Entities.Users.Contained;
 using ECommerce.Core.Exceptions;
 using ECommerce.Core.Helpers.Enums;
 using ECommerce.Core.Repositories.Manager;
-using ECommerce.Repositry.Abstraction;
-using ECommerce.Repositry.Models.InputModels;
-using ECommerce.Repositry.Models.OutputModels;
+using ECommerce.Repository.Abstraction;
+using ECommerce.Repository.Models.InputModels;
+using ECommerce.Repository.Models.OutputModels;
 using Microsoft.AspNetCore.Identity;
 using MongoDB.Bson;
 using System;
@@ -16,7 +16,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Repositry.Services
+namespace ECommerce.Repository.Services
 {
     public class UserServices(UserManager<User> userManager,
         IManagerRepository managerRepository,
@@ -70,13 +70,9 @@ namespace ECommerce.Repositry.Services
                 new(ClaimTypes.NameIdentifier, user.Id),
                 new(ClaimTypes.Name, user.Name),
                 new(ClaimTypes.Email, user.Email),
+                new(ClaimTypes.Role, user.Role.ToString())
             };
 
-            var roles = await userManager.GetRolesAsync(user);
-            foreach (var role in roles)
-            {
-                claims.Add(new(ClaimTypes.Role, role));
-            }
 
             if (user.Role.Equals(UserRoles.Consumer))
                 claims.AddRange([
@@ -85,6 +81,7 @@ namespace ECommerce.Repositry.Services
                     new Claim(CustomClaimTypes.StreetName, user.Location.StreetName),
                     new Claim(CustomClaimTypes.ShopCartId,user.ShopCartId)
                     ]);
+
             else if (user.Role == UserRoles.Delivery)
                 claims.AddRange([
                     new Claim(CustomClaimTypes.CountryName, user.Location.CountryName),

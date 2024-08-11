@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Core.Entities.Users.Contained
+namespace ECommerce.Core.Entities.Application.Contained
 {
     [Owned]
     public class Location

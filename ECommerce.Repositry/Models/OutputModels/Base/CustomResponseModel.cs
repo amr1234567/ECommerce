@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Repositry.Models.OutputModels.Base
+namespace ECommerce.Repository.Models.OutputModels.Base
 {
     public class CustomResponseModel<T>
     {

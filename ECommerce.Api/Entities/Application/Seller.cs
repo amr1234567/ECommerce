@@ -11,6 +11,7 @@ using MongoDB.Bson;
 using ECommerce.Core.Helpers.Enums;
 
 namespace ECommerce.Core.Entities.Application
+
 {
     public class Seller
     {

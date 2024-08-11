@@ -1,10 +1,9 @@
-﻿// Ignore Spelling: Repositry
-
-
+﻿
 using ECommerce.Core.Repositories.Manager;
-using ECommerce.Repositry.Services;
+using ECommerce.Repository.Abstraction;
+using ECommerce.Repository.Abstraction.UnitOfWork;
 
-namespace ECommerce.Repositry.Abstraction.UnitOfWork
+namespace ECommerce.Repository.Services.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -33,7 +32,7 @@ namespace ECommerce.Repositry.Abstraction.UnitOfWork
             _lazyIDiscountServices = new Lazy<IDiscountServices>(() => new DiscountServices(managerRepository));
             _lazySellerServices = new Lazy<ISellerServices>(() => new SellerServices(managerRepository));
             _lazyShopCartServices = new Lazy<IShopCartServices>(() => new ShopCartServices(managerRepository));
-            _lazyTransactionServices = new Lazy<ITransactionServices>(() => new TransactionServices(managerRepository));
+            _lazyTransactionServices = new Lazy<ITransactionServices>(() => new TransactionServices(managerRepository, userServices));
         }
 
         public IBugReportServices BugReportServices => _lazyBugReportServices.Value;

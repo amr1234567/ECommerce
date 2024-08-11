@@ -36,7 +36,7 @@ namespace ECommerce.DataAccess.Repositories
 
         public Task<IQueryable<Category>> GetAllCategories()
         {
-            return Task.FromResult(context.Categories.AsNoTracking());
+            return Task.FromResult(context.Categories.AsQueryable());
         }
 
         public async Task<Category> GetCategoryById(string categoryId) =>

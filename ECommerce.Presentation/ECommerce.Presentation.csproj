@@ -14,13 +14,14 @@
     </PackageReference>
     <PackageReference Include="MongoDB.EntityFrameworkCore" Version="8.0.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Stripe.net" Version="45.7.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ECommerce.Api\ECommerce.Core.csproj" />
     <ProjectReference Include="..\ECommerce.DataAccess\ECommerce.DataAccess.csproj" />
-    <ProjectReference Include="..\ECommerce.Repositry\ECommerce.Repositry.csproj" />
+    <ProjectReference Include="..\ECommerce.Repositry\ECommerce.Repository.csproj" />
   </ItemGroup>
 
 </Project>

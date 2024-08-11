@@ -1,41 +1,103 @@
-﻿
+﻿using ECommerce.Core.Entities.Application;
 using ECommerce.Core.Repositories.Manager;
-using ECommerce.Repositry.Abstraction;
-using ECommerce.Repositry.Models.InputModels;
-using ECommerce.Repositry.Models.OutputModels;
+using ECommerce.Repository.Abstraction;
+using ECommerce.Repository.Models.InputModels;
+using ECommerce.Repository.Models.OutputModels;
 
-namespace ECommerce.Repositry.Services
+namespace ECommerce.Repository.Services
 {
     internal class SubCategoryServices(IManagerRepository managerRepository) : ISubCategoryServices
     {
-        public Task<bool> AddSubCategory(SubCategoryToAddModel model)
+        public async Task<bool> AddSubCategory(SubCategoryToAddModel model)
         {
-            throw new NotImplementedException();
+            var res = await managerRepository.SubCategoryRepository.AddSubCategory(model.ToModel());
+            return res;
         }
 
-        public Task<SubCategoryResponse> ChangeCategoryOfSubCategory(string subCategoryId, string newCategoryId)
+        public async Task<SubCategoryResponse> ChangeCategoryOfSubCategory(string subCategoryId, string newCategoryId)
         {
-            throw new NotImplementedException();
+            var subCategory = await managerRepository.SubCategoryRepository.ChangeCategoryOfSubCategory(subCategoryId, newCategoryId);
+            return new SubCategoryResponse
+            {
+                Id = subCategory.Id,
+                Name = subCategory.Name,
+                Description = subCategory.Description,
+                CategoryId = subCategory.CategoryId,
+                Sellers = subCategory.SellersIds.Select(s => new SellersForSubCategory
+                {
+                    Id = s,
+                    Name = managerRepository.SellerRepository.GetSellerById(s).Result.Name,
+                }).ToList(),
+            };
         }
 
-        public Task<SubCategoryResponse> DeleteSubCategory(string SubCategoryId)
+        public async Task<SubCategoryResponse> DeleteSubCategory(string SubCategoryId)
         {
-            throw new NotImplementedException();
+            var subCategory = await managerRepository.SubCategoryRepository.DeleteSubCategory(SubCategoryId);
+            return new SubCategoryResponse
+            {
+                Id = subCategory.Id,
+                Name = subCategory.Name,
+                Description = subCategory.Description,
+                CategoryId = subCategory.CategoryId,
+                Sellers = subCategory.SellersIds.Select(s => new SellersForSubCategory
+                {
+                    Id = s,
+                    Name = managerRepository.SellerRepository.GetSellerById(s).Result.Name,
+                }).ToList(),
+            };
         }
 
-        public Task<SubCategoryResponse> EditSubCategory(SubCategoryToEditModel model)
+        public async Task<SubCategoryResponse> EditSubCategory(SubCategoryToEditModel model)
         {
-            throw new NotImplementedException();
+            var subCategory = await managerRepository.SubCategoryRepository.EditSubCategory(model.ToModel());
+            return new SubCategoryResponse
+            {
+                Id = subCategory.Id,
+                Name = subCategory.Name,
+                Description = subCategory.Description,
+                CategoryId = subCategory.CategoryId,
+                Sellers = subCategory.SellersIds.Select(s => new SellersForSubCategory
+                {
+                    Id = s,
+                    Name = managerRepository.SellerRepository.GetSellerById(s).Result.Name,
+                }).ToList(),
+            };
         }
 
-        public Task<List<SubCategoryResponse>> GetAllSubCategories()
+        public async Task<IQueryable<SubCategoryResponse>> GetAllSubCategories()
         {
-            throw new NotImplementedException();
+            var subCategories = await managerRepository.SubCategoryRepository.GetAllSubCategories();
+            return subCategories.Select(subCategory => new SubCategoryResponse
+            {
+                Id = subCategory.Id,
+                Name = subCategory.Name,
+                Description = subCategory.Description,
+                CategoryId = subCategory.CategoryId,
+                Sellers = subCategory.SellersIds.Select(s => new SellersForSubCategory
+                {
+                    Id = s,
+                    Name = managerRepository.SellerRepository.GetSellerById(s).Result.Name,
+                }).ToList(),
+            });
         }
 
-        public Task<List<SubCategoryResponse>> GetAllSubCategoriesForSeller(string sellerId)
+        public async Task<List<SubCategoryResponse>> GetAllSubCategoriesForSeller(string sellerId)
         {
-            throw new NotImplementedException();
+            var subCategories = await managerRepository.SubCategoryRepository.GetAllSubCategoriesForSeller(sellerId);
+            return subCategories.Select(subCategory => new SubCategoryResponse
+            {
+                Id = subCategory.Id,
+                Name = subCategory.Name,
+                Description = subCategory.Description,
+                CategoryId = subCategory.CategoryId,
+                Sellers = subCategory.SellersIds.Select(s => new SellersForSubCategory
+                {
+                    Id = s,
+                    Name = managerRepository.SellerRepository.GetSellerById(s).Result.Name,
+                }).ToList(),
+            }).ToList();
         }
+
     }
 }

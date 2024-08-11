@@ -1,8 +1,8 @@
 ﻿using ECommerce.Core.Entities.Users;
 using ECommerce.Core.Exceptions;
 using ECommerce.Core.Helpers.Classes;
-using ECommerce.Repositry.Abstraction;
-using ECommerce.Repositry.Models.OutputModels;
+using ECommerce.Repository.Abstraction;
+using ECommerce.Repository.Models.OutputModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -13,7 +13,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace ECommerce.Repositry.Services
+namespace ECommerce.Repository.Services
 {
     public class TokenServices(UserManager<User> userManager, IOptions<JwtHelper> jwtOptions) : ITokenServices
     {
@@ -112,7 +112,7 @@ namespace ECommerce.Repositry.Services
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256Signature);
             var tokeOptions = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(5),
+                expires: DateTime.Now.AddMinutes(_jwtHelper.ExpireTimeInMinutes),
                 signingCredentials: signinCredentials
             );
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
@@ -128,11 +128,11 @@ namespace ECommerce.Repositry.Services
             }
             var tokenValidationParameters = new TokenValidationParameters
             {
-                ValidateAudience = false, //you might want to validate the audience and issuer depending on your use case
+                ValidateAudience = false,
                 ValidateIssuer = false,
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtHelper.Key)),
-                ValidateLifetime = false //here we are saying that we don't care about the token's expiration date
+                ValidateLifetime = false
             };
             var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
             if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256Signature, StringComparison.InvariantCultureIgnoreCase))

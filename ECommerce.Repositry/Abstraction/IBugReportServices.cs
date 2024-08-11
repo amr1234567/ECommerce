@@ -1,13 +1,13 @@
 ﻿using ECommerce.Core.Entities.Application;
-using ECommerce.Repositry.Models.InputModels;
-using ECommerce.Repositry.Models.OutputModels;
+using ECommerce.Repository.Models.InputModels;
+using ECommerce.Repository.Models.OutputModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Repositry.Abstraction
+namespace ECommerce.Repository.Abstraction
 {
     public interface IBugReportServices
     {
@@ -15,9 +15,9 @@ namespace ECommerce.Repositry.Abstraction
         Task<BugReportResponse> MarkAsDone(string bugReportId);
         Task<BugReportResponse> MarkAsIgnored(string bugReportId);
         Task<BugReportResponse> MarkAsUnderProgress(string bugReportId);
-        Task<List<BugReportResponse>> GetAllBugReports();
-        Task<List<BugReportResponse>> GetAllCompletedBugReports();
-        Task<List<BugReportResponse>> GetAllUnderProgressBugReports();
-        Task<List<BugReportResponse>> GetAllUnCompletedBugReports();
+        Task<IQueryable<BugReportResponse>> GetAllBugReports();
+        Task<IQueryable<BugReportResponse>> GetAllCompletedBugReports();
+        Task<IQueryable<BugReportResponse>> GetAllUnderProgressBugReports();
+        Task<IQueryable<BugReportResponse>> GetAllUnCompletedBugReports();
     }
 }

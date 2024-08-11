@@ -1,6 +1,5 @@
 ﻿using ECommerce.Core.Entities.Application.Contained;
 using ECommerce.Core.Entities.Users;
-using ECommerce.Core.Entities.Users.Contained;
 using ECommerce.Core.Helpers.Enums;
 using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
@@ -16,8 +15,7 @@ namespace ECommerce.Core.Entities.Application
         [BsonElement("id")]
         public string Id { get; set; }
 
-        [Required]
-        [BsonElement("expected_receive_date")]
+        [AllowNull]
         public DateTime ExpectedReceiveDate { get; set; }
 
         [AllowNull]
@@ -28,7 +26,7 @@ namespace ECommerce.Core.Entities.Application
         [BsonElement("created_at")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        [Required]
+        [AllowNull]
         [BsonElement("discount_id")]
         public string DiscountId { get; set; }
 
@@ -43,7 +41,7 @@ namespace ECommerce.Core.Entities.Application
         [Required]
         public List<ShopCartItem> Items { get; set; }
 
-        [Required]
+        [AllowNull]
         [BsonElement("delivery_id")]
         public string DelivaryId { get; set; }
 

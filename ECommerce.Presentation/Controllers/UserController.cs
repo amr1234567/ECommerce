@@ -2,11 +2,10 @@
 using ECommerce.Core.Helpers.Classes;
 using ECommerce.Core.Helpers.Enums;
 using ECommerce.Presentation.Models;
-using ECommerce.Repositry.Abstraction;
-using ECommerce.Repositry.Abstraction.UnitOfWork;
-using ECommerce.Repositry.Models.InputModels;
-using ECommerce.Repositry.Models.OutputModels;
-using ECommerce.Repositry.Models.OutputModels.Base;
+using ECommerce.Repository.Abstraction;
+using ECommerce.Repository.Models.InputModels;
+using ECommerce.Repository.Models.OutputModels;
+using ECommerce.Repository.Models.OutputModels.Base;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +26,8 @@ namespace ECommerce.Presentation.Controllers
         //[NonAction]
         public async Task<IActionResult> GetAdminById(string id)
         {
+            if (!ModelState.IsValid)
+                throw new ModelStateNotValidException(nameof(GetAdminById));
             return Ok(new CustomResponseModel<UserResponse>
             {
                 Body = await userServices.GetAdminById(id),
@@ -177,12 +178,6 @@ namespace ECommerce.Presentation.Controllers
             });
         }
 
-        [Authorize]
-        [HttpGet("test")]
-        public string test()
-        {
-            return "Auth";
-        }
         private string? GetUserIdFromClaims() =>
             User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.NameIdentifier))?.Value;
     }

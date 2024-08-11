@@ -14,6 +14,7 @@ namespace ECommerce.Core.Repositories
         Task<Transaction> ConfirmTransactionDelivered(string transactionId);
         Task<Transaction> ConfirmTransactionGoToDelivery(string transactionId);
         Task<IQueryable<Transaction>> GetAllTransactionForConsumer(string consumerId);
+        Task<IQueryable<Transaction>> GetAllTransactions(string? hour, string? day, string? month, string? year);
         Task<IQueryable<Transaction>> GetAllCompletedTransactionForConsumer(string consumerId);
         Task<IQueryable<Transaction>> GetAllUnderProgressTransactionForConsumer(string consumerId);
         Task<IQueryable<Transaction>> GetAllTransactionForDelivery(string consumerId);
@@ -21,5 +22,8 @@ namespace ECommerce.Core.Repositories
         Task<IQueryable<Transaction>> GetAllUnderProgressTransactionForDelivery(string deliveryId);
         Task<List<Product>> GetAllProductsInTransaction(string transactionId);
         Task<Transaction> GetTransactionById(string transactionId);
+        Task<bool> AssignDeliveryManToTransaction(string deliveryId, string transactionId);
+        Task<bool> AssignDeliveryManToTransactions(string deliveryId, params string[] transactionsIds);
+        Task<Transaction> SetExpectedReceiveDate(string transactionId, DateTime date);
     }
 }

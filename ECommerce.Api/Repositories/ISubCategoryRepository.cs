@@ -14,6 +14,7 @@ namespace ECommerce.Core.Repositories
         Task<SubCategory> DeleteSubCategory(string SubCategoryId);
         Task<SubCategory> ChangeCategoryOfSubCategory(string subCategoryId, string newCategoryId);
         Task<IQueryable<SubCategory>> GetAllSubCategories();
+        Task<SubCategory> GetSubCategoryBuyId(string subCategoryId);
         Task<List<SubCategory>> GetAllSubCategoriesForSeller(string sellerId);
     }
 }

@@ -17,7 +17,13 @@ namespace ECommerce.DataAccess.Repositories
         public async Task<Discount> DeleteDiscountFromDb(string discountId)
         {
             var discount = await GetDiscountById(discountId);
-
+            var code = GenerateDiscountCode();
+            var discountWithSameCode = await GetDiscountByCode(code);
+            while (discountWithSameCode != null)
+            {
+                code = GenerateDiscountCode();
+                discountWithSameCode = await GetDiscountByCode(code);
+            }
             context.Discounts.Remove(discount);
             await context.SaveChangesAsync();
             return discount;
@@ -51,6 +57,21 @@ namespace ECommerce.DataAccess.Repositories
             var discount = await context.Discounts.FirstOrDefaultAsync(d => d.Id == discountId)
                 ?? throw new NotFoundException($"Discount with id {discountId}");
             return discount;
+        }
+
+        public async Task<Discount> GetDiscountByCode(string code)
+        {
+            return await context.Discounts.FirstOrDefaultAsync(d => d.Code.Equals(code))
+                ?? throw new NotFoundException($"discount with code {code}");
+        }
+        private string GenerateDiscountCode()
+        {
+            var chars = "qwertyuiopasdfghjklzxcvbnm1234567890";
+            var random = new Random();
+            var result = new string(Enumerable.Repeat(chars, 8)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+
+            return result;
         }
     }
 }

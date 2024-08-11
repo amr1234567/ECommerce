@@ -1,14 +1,13 @@
 ﻿using ECommerce.Core.Repositories.Manager;
-using ECommerce.Repositry.Abstraction;
-using ECommerce.Repositry.Models.InputModels;
-using ECommerce.Repositry.Models.OutputModels;
+using ECommerce.Repository.Abstraction;
+using ECommerce.Repository.Models.OutputModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Repositry.Services
+namespace ECommerce.Repository.Services
 {
     internal class ShopCartServices(IManagerRepository managerRepository) : IShopCartServices
     {
@@ -29,10 +28,10 @@ namespace ECommerce.Repositry.Services
             return await managerRepository.ShopCartRepository.AddShopCart(userId);
         }
 
-
-        public Task<ShopCartResponse> DeleteShopCart(string shopCartId)
+        public async Task<ShopCartResponse> DeleteShopCart(string shopCartId)
         {
-            throw new NotImplementedException();
+            var shopCart = await managerRepository.ShopCartRepository.DeleteShopCart(shopCartId);
+            return new ShopCartResponse(shopCart);
         }
 
         public async Task<ShopCartResponse> GetShopCartById(string shopCartId)
@@ -41,14 +40,16 @@ namespace ECommerce.Repositry.Services
             return new ShopCartResponse(shopCart);
         }
 
-        public Task<ShopCartResponse> RemoveProductFromShopCart(string shopCartId, string productId)
+        public async Task<ShopCartResponse> RemoveProductFromShopCart(string shopCartId, string productId)
         {
-            throw new NotImplementedException();
+            var shopCart = await managerRepository.ShopCartRepository.RemoveProductFromShopCart(shopCartId, productId);
+            return new ShopCartResponse(shopCart);
         }
 
-        public Task<ShopCartResponse> RemoveProductsFromShopCart(string shopCartId, params string[] productsId)
+        public async Task<ShopCartResponse> RemoveProductsFromShopCart(string shopCartId, params string[] productsId)
         {
-            throw new NotImplementedException();
+            var shopCart = await managerRepository.ShopCartRepository.RemoveProductsFromShopCart(shopCartId, productsId);
+            return new ShopCartResponse(shopCart);
         }
     }
 }

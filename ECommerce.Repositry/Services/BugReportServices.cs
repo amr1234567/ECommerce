@@ -1,9 +1,9 @@
 ﻿using ECommerce.Core.Exceptions;
 using ECommerce.Core.Helpers;
 using ECommerce.Core.Repositories.Manager;
-using ECommerce.Repositry.Abstraction;
-using ECommerce.Repositry.Models.InputModels;
-using ECommerce.Repositry.Models.OutputModels;
+using ECommerce.Repository.Abstraction;
+using ECommerce.Repository.Models.InputModels;
+using ECommerce.Repository.Models.OutputModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Repositry.Services
+namespace ECommerce.Repository.Services
 {
     internal class BugReportServices(IManagerRepository managerRepository, IUserServices userServices) : IBugReportServices
     {
@@ -24,31 +24,28 @@ namespace ECommerce.Repositry.Services
             return await managerRepository.BugReportRepository.GenerateNewBugReport(model.ToModel());
         }
 
-        public async Task<List<BugReportResponse>> GetAllBugReports()
+        public async Task<IQueryable<BugReportResponse>> GetAllBugReports()
         {
             var bugReports = await managerRepository.BugReportRepository.GetAllBugReports();
-            return await bugReports.Select(b => new BugReportResponse(b, userServices)).ToListAsync();
+            return bugReports.Select(b => new BugReportResponse(b, userServices));
         }
 
-        public async Task<List<BugReportResponse>> GetAllCompletedBugReports()
+        public async Task<IQueryable<BugReportResponse>> GetAllCompletedBugReports()
         {
             var bugReports = await managerRepository.BugReportRepository.GetAllCompletedBugReports();
-            return await bugReports.Select(b => new BugReportResponse(b, userServices))
-                .ToListAsync();
+            return bugReports.Select(b => new BugReportResponse(b, userServices));
         }
 
-        public async Task<List<BugReportResponse>> GetAllUnCompletedBugReports()
+        public async Task<IQueryable<BugReportResponse>> GetAllUnCompletedBugReports()
         {
             var bugReports = await managerRepository.BugReportRepository.GetAllUnCompletedBugReports();
-            return await bugReports.Select(b => new BugReportResponse(b, userServices))
-                .ToListAsync();
+            return bugReports.Select(b => new BugReportResponse(b, userServices));
         }
 
-        public async Task<List<BugReportResponse>> GetAllUnderProgressBugReports()
+        public async Task<IQueryable<BugReportResponse>> GetAllUnderProgressBugReports()
         {
             var bugReports = await managerRepository.BugReportRepository.GetAllUnderProgressBugReports();
-            return await bugReports.Select(b => new BugReportResponse(b, userServices))
-                .ToListAsync();
+            return bugReports.Select(b => new BugReportResponse(b, userServices));
         }
 
         public async Task<BugReportResponse> MarkAsDone(string bugReportId)

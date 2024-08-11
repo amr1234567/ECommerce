@@ -30,6 +30,6 @@ namespace ECommerce.Core.Entities.Application
 
         [AllowNull]
         [BsonElement("sellers")]
-        public List<string> Sellers { get; set; }
+        public List<string> SellersIds { get; set; }
     }
 }

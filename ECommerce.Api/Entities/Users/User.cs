@@ -1,5 +1,5 @@
 ﻿using ECommerce.Core.Entities.Application;
-using ECommerce.Core.Entities.Users.Contained;
+using ECommerce.Core.Entities.Application.Contained;
 using ECommerce.Core.Helpers.Enums;
 using Microsoft.AspNetCore.Identity;
 using MongoDB.Bson;

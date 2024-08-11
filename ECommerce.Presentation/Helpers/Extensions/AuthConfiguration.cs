@@ -28,6 +28,7 @@ namespace ECommerce.Presentation.Helpers.Extensions
                         ValidateIssuer = false,
                         ValidateAudience = false,
                         ValidateLifetime = true,
+                        RequireExpirationTime = true,
                         ClockSkew = TimeSpan.Zero,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtHelper.Key))
                     };

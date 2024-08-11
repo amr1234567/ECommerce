@@ -15,7 +15,6 @@ namespace ECommerce.DataAccess.Repositories
 {
     internal class TransactionRepository(ECommerceContext context) : ITransactionRepository
     {
-
         public async Task<bool> AddTransaction(Transaction model)
         {
             ArgumentNullException.ThrowIfNull(model);
@@ -23,6 +22,28 @@ namespace ECommerce.DataAccess.Repositories
             model.Id = id.ToString();
             await context.Transactions.AddAsync(model);
             await context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> AssignDeliveryManToTransaction(string deliveryId, string transactionId)
+        {
+            if (string.IsNullOrWhiteSpace(deliveryId))
+                throw new ParameterIsNullOrEmptyException(nameof(deliveryId));
+            if (string.IsNullOrWhiteSpace(transactionId))
+                throw new ParameterIsNullOrEmptyException(nameof(transactionId));
+
+            var transaction = await GetTransactionById(transactionId);
+
+            transaction.DelivaryId = deliveryId;
+            context.Transactions.Update(transaction);
+            await context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> AssignDeliveryManToTransactions(string deliveryId, params string[] transactionsIds)
+        {
+            foreach (var transactionId in transactionsIds)
+                await AssignDeliveryManToTransaction(deliveryId, transactionId);
             return true;
         }
 
@@ -91,6 +112,22 @@ namespace ECommerce.DataAccess.Repositories
             return Task.FromResult(context.Transactions.Where(t => t.DelivaryId.Equals(deliveryID)));
         }
 
+        public Task<IQueryable<Transaction>> GetAllTransactions(string? hour, string? day, string? month, string? year)
+        {
+            var dateNow = DateTime.Now;
+            var transactions = context.Transactions.AsQueryable();
+            if (!string.IsNullOrEmpty(year))
+                transactions = transactions.Where(t => t.CreatedAt.Year.Equals(Convert.ToInt32(year)));
+            if (!string.IsNullOrEmpty(month))
+                transactions = transactions.Where(t => t.CreatedAt.Month.Equals(Convert.ToInt32(month)));
+            if (!string.IsNullOrEmpty(day))
+                transactions = transactions.Where(t => t.CreatedAt.Day.Equals(Convert.ToInt32(day)));
+            if (!string.IsNullOrEmpty(hour))
+                transactions = transactions.Where(t => t.CreatedAt.Hour.Equals(Convert.ToInt32(hour)));
+
+            return Task.FromResult(transactions);
+        }
+
         public Task<IQueryable<Transaction>> GetAllUnderProgressTransactionForConsumer(string consumerId)
         {
             return Task.FromResult(context.Transactions.Where(t => t.ConsumerId.Equals(consumerId))
@@ -107,6 +144,15 @@ namespace ECommerce.DataAccess.Repositories
         {
             var transaction = await context.Transactions.FirstOrDefaultAsync(t => t.Id.Equals(transactionId))
                 ?? throw new NotFoundException($"Transaction with id {transactionId}");
+            return transaction;
+        }
+
+        public async Task<Transaction> SetExpectedReceiveDate(string transactionId, DateTime date)
+        {
+            var transaction = await GetTransactionById(transactionId);
+            transaction.ExpectedReceiveDate = date;
+            context.Transactions.Update(transaction);
+            await context.SaveChangesAsync();
             return transaction;
         }
     }

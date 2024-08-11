@@ -13,5 +13,6 @@ namespace ECommerce.Core.Repositories
         Task<Discount> GetDiscountById(string discountId);
         Task<Discount> DeleteDiscountFromDb(string discountId);
         Task<Discount> MarkDiscountAsUsed(string discountId);
+        Task<Discount> GetDiscountByCode(string code);
     }
 }

@@ -36,7 +36,7 @@ namespace ECommerce.Core.Entities.Application
         public string SellerId { get; set; }
 
         [BsonElement("sub_category_id")]
-        [AllowNull]
+        [Required]
         public string SubCategoryId { get; set; }
 
         [AllowNull]
@@ -61,7 +61,7 @@ namespace ECommerce.Core.Entities.Application
 
         [NotMapped]
         public double CurrentPrice => HasDiscount ?
-            RealPrice - Discount.DiscountAmount / 100 * RealPrice :
+            RealPrice - Discount.DiscountPercentage ?? 0 / 100 * RealPrice :
             RealPrice;
 
     }

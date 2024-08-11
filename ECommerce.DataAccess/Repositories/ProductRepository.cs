@@ -57,7 +57,7 @@ namespace ECommerce.DataAccess.Repositories
             var products = context.Products.Select((p) => new ProductSellerCategorySubCategory
             {
                 CategoryId = p.CategoryId,
-                DiscountAmountOfProduct = p.Discount.DiscountAmount,
+                DiscountPrecentage = p.Discount.DiscountPercentage,
                 FinalDateForDiscount = p.Discount.FinalDate,
                 FirstDateForDiscount = p.Discount.FirstDate,
                 ProductDescription = p.Description,
@@ -99,7 +99,7 @@ namespace ECommerce.DataAccess.Repositories
             var product = await context.Products.Select((p) => new ProductSellerCategorySubCategory
             {
                 CategoryId = p.CategoryId,
-                DiscountAmountOfProduct = p.Discount.DiscountAmount,
+                DiscountPrecentage = p.Discount.DiscountPercentage,
                 FinalDateForDiscount = p.Discount.FinalDate,
                 FirstDateForDiscount = p.Discount.FirstDate,
                 ProductDescription = p.Description,
@@ -124,7 +124,15 @@ namespace ECommerce.DataAccess.Repositories
             var product = await GetProductForInternalMethods(model.Id);
             product.Quantity = model.Quantity < 0 ? product.Quantity : model.Quantity;
             product.RealPrice = model.RealPrice < 0 ? product.RealPrice : model.RealPrice;
-            product.Discount = model.Discount is null ? product.Discount : model.Discount;
+
+            //if u want to make the discount null, pass to the percentage negative number
+            //if u son't want to change the discount pass a null to it
+            product.Discount = model.Discount is null ?
+                product.Discount :
+                model.Discount.DiscountPercentage < 0 ?
+                    null :
+                    model.Discount;
+
             product.Name = string.IsNullOrEmpty(model.Name) ? product.Name : model.Name;
             product.Description = string.IsNullOrEmpty(model.Description) ? product.Description : model.Description;
 

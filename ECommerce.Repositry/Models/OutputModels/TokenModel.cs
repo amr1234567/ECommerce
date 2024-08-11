@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Repositry.Models.OutputModels
+namespace ECommerce.Repository.Models.OutputModels
 {
     public class TokenModel
     {

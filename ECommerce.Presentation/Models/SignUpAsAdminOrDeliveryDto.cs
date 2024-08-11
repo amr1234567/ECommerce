@@ -1,4 +1,4 @@
-﻿using ECommerce.Repositry.Models.InputModels;
+﻿using ECommerce.Repository.Models.InputModels;
 using System.ComponentModel.DataAnnotations;
 
 namespace ECommerce.Presentation.Models

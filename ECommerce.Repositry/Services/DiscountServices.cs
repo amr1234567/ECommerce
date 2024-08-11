@@ -1,35 +1,39 @@
 ﻿using ECommerce.Core.Repositories.Manager;
-using ECommerce.Repositry.Abstraction;
-using ECommerce.Repositry.Models.InputModels;
-using ECommerce.Repositry.Models.OutputModels;
+using ECommerce.Repository.Abstraction;
+using ECommerce.Repository.Models.InputModels;
+using ECommerce.Repository.Models.OutputModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Repositry.Services
+namespace ECommerce.Repository.Services
 {
     internal class DiscountServices(IManagerRepository managerRepository) : IDiscountServices
     {
-        public Task<DiscountResponse> DeleteDiscountFromDb(string discountId)
+        public async Task<DiscountResponse> DeleteDiscountFromDb(string discountId)
         {
-            throw new NotImplementedException();
+            var dicount = await managerRepository.DiscountRepository.DeleteDiscountFromDb(discountId);
+            return new DiscountResponse(dicount);
         }
 
-        public Task<bool> GenerateNewDiscount(DiscountToAddModel model)
+        public async Task<bool> GenerateNewDiscount(DiscountToAddModel model)
         {
-            throw new NotImplementedException();
+            var res = await managerRepository.DiscountRepository.GenerateNewDiscount(model.ToModel());
+            return res;
         }
 
-        public Task<DiscountResponse> GetDiscountById(string discountId)
+        public async Task<DiscountResponse> GetDiscountById(string discountId)
         {
-            throw new NotImplementedException();
+            var discount = await managerRepository.DiscountRepository.GetDiscountById(discountId);
+            return new DiscountResponse(discount);
         }
 
-        public Task<DiscountResponse> MarkDiscountAsUsed(string discountId)
+        public async Task<DiscountResponse> MarkDiscountAsUsed(string discountId)
         {
-            throw new NotImplementedException();
+            var discount = await managerRepository.DiscountRepository.MarkDiscountAsUsed(discountId);
+            return new DiscountResponse(discount);
         }
     }
 }

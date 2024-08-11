@@ -1,7 +1,6 @@
 ﻿using ECommerce.Core.Entities.Application;
 using ECommerce.Core.Helpers.Enums;
-using ECommerce.Repositry.Abstraction;
-using ECommerce.Repositry.Services;
+using ECommerce.Repository.Abstraction;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Repositry.Models.OutputModels
+namespace ECommerce.Repository.Models.OutputModels
 {
     public class BugReportResponse
     {

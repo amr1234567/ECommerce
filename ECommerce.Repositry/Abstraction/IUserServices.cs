@@ -1,13 +1,13 @@
 ﻿using ECommerce.Core.Helpers.Enums;
-using ECommerce.Repositry.Models.InputModels;
-using ECommerce.Repositry.Models.OutputModels;
+using ECommerce.Repository.Models.InputModels;
+using ECommerce.Repository.Models.OutputModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Repositry.Abstraction
+namespace ECommerce.Repository.Abstraction
 {
     public interface IUserServices
     {

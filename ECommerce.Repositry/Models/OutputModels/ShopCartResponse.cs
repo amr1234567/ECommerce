@@ -9,16 +9,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Repositry.Models.OutputModels
+namespace ECommerce.Repository.Models.OutputModels
 {
     public class ShopCartResponse
     {
-        
+
         public string Id { get; set; }
 
         public List<ShopCartItem> Items { get; set; }
 
-        public double TotalPrice {  get; set; }
+        public double TotalPrice { get; set; }
 
         public ShopCartResponse(ShopCart shopCart)
         {

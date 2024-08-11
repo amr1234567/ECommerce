@@ -69,6 +69,10 @@ namespace ECommerce.DataAccess.Repositories
 
         public async Task<SubCategory> ChangeCategoryOfSubCategory(string subCategoryId, string newCategoryId)
         {
+            if (string.IsNullOrEmpty(subCategoryId))
+                throw new ParameterIsNullOrEmptyException(nameof(subCategoryId));
+            if (string.IsNullOrEmpty(newCategoryId))
+                throw new ParameterIsNullOrEmptyException(nameof(newCategoryId));
             var subCategory = await GetSubCategoryById(subCategoryId);
             var category = await context.Categories.FirstOrDefaultAsync(c => c.Id.Equals(newCategoryId))
                 ?? throw new NotFoundException($"Category with id {newCategoryId}");
@@ -78,5 +82,13 @@ namespace ECommerce.DataAccess.Repositories
             return subCategory;
         }
 
+        public async Task<SubCategory> GetSubCategoryBuyId(string subCategoryId)
+        {
+            if (string.IsNullOrEmpty(subCategoryId))
+                throw new ParameterIsNullOrEmptyException(nameof(subCategoryId));
+            var subCategory = await context.SubCategories.FirstOrDefaultAsync(c => c.Id.Equals(subCategoryId))
+                ?? throw new NotFoundException($"sub category with id {subCategoryId}");
+            return subCategory;
+        }
     }
 }

@@ -1,13 +1,13 @@
 ﻿using ECommerce.Core.Entities.Application;
-using ECommerce.Repositry.Models.InputModels;
-using ECommerce.Repositry.Models.OutputModels;
+using ECommerce.Repository.Models.InputModels;
+using ECommerce.Repository.Models.OutputModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Repositry.Abstraction
+namespace ECommerce.Repository.Abstraction
 {
     public interface ISubCategoryServices
     {
@@ -15,7 +15,7 @@ namespace ECommerce.Repositry.Abstraction
         Task<SubCategoryResponse> EditSubCategory(SubCategoryToEditModel model);
         Task<SubCategoryResponse> DeleteSubCategory(string SubCategoryId);
         Task<SubCategoryResponse> ChangeCategoryOfSubCategory(string subCategoryId, string newCategoryId);
-        Task<List<SubCategoryResponse>> GetAllSubCategories();
+        Task<IQueryable<SubCategoryResponse>> GetAllSubCategories();
         Task<List<SubCategoryResponse>> GetAllSubCategoriesForSeller(string sellerId);
     }
 }
